@@ -1,0 +1,63 @@
+# ===================================================================
+# Scala / sbt
+# sbt가 생성하는 컴파일된 코드, 라이브러리, 빌드 산출물을 무시합니다.
+# ===================================================================
+# sbt build directory
+**/target/
+
+# sbt project directory (ignore compiled artifacts within it)
+**/project/project/
+**/project/target/
+
+# Bloop build server configuration (Metals/VSCode 와 함께 사용 시)
+.bloop/
+
+# Metals language server configuration
+.metals/
+
+# sbt-ensime specific
+.ensime_cache/
+
+
+# ===================================================================
+# IntelliJ IDEA
+# IntelliJ가 생성하는 사용자별 설정, 캐시, 로컬 히스토리 등을 무시합니다.
+# sbt 프로젝트에서는 build.sbt가 기준이므로, .idea 와 .iml 파일은
+# 언제든지 'Reimport'를 통해 재생성할 수 있습니다.
+# ===================================================================
+# IntelliJ project files
+**/.idea/
+**/*.iml
+**/*.ipr
+**/*.iws
+
+# IntelliJ build output directory
+**//out/
+
+
+# ===================================================================
+# 일반적인 파일 및 운영체제 파일
+# ===================================================================
+# Logs and temporary files
+**/*.log
+**/*.tmp
+**/*.temp
+
+# macOS
+**/.DS_Store
+**/.AppleDouble
+**/.LSOverride
+
+# Windows
+**/Thumbs.db
+**/ehthumbs.db
+**/Desktop.ini
+
+
+# ===================================================================
+# 민감 정보 (필요시 주석 해제)
+# ===================================================================
+# Secrets and credentials
+# .env
+# secrets.conf
+# application.secret
