@@ -18,6 +18,7 @@
 # sbt-ensime specific
 .ensime_cache/
 
+**/lib_managed/**
 
 # ===================================================================
 # IntelliJ IDEA
