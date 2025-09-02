@@ -31,7 +31,23 @@ object Main {
   /**
    * Exercise 2
    */
-  def balance(chars: List[Char]): Boolean = ???
+  def balance(chars: List[Char]): Boolean = {
+
+    @tailrec
+    def loop(chars: List[Char], count:Int): Boolean = {
+      if(count < 0)  false
+      else if(chars.isEmpty)
+        count == 0
+      else {
+        val head = chars.head
+        if(head == '(') loop(chars.tail, count + 1)
+        else if(head == ')') loop(chars.tail, count - 1)
+        else loop(chars.tail, count)
+      }
+    }
+
+    loop(chars, 0)
+  }
 
   /**
    * Exercise 3
