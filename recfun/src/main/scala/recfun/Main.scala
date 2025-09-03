@@ -52,5 +52,27 @@ object Main {
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+    @tailrec
+    def dfs(nodes: List[(Int, List[Int])], sum: Int): Int = {
+      if(nodes.isEmpty) sum
+      else
+        {
+          val (curMoney, curCoins) = nodes.head
+          if(curMoney == 0)
+            dfs(nodes.tail, sum+1)
+          else if(curMoney < 0 || curCoins.isEmpty)
+            dfs(nodes.tail, sum)
+          else
+            {
+              val nL = (0 to curMoney / curCoins.head).map{ k =>
+                (curMoney - k * curCoins.head, curCoins.tail)
+              }.toList
+              dfs(nL:::nodes.tail, sum)
+            }
+        }
+    }
+
+    dfs(List((money, coins)), 0)
+  }
 }
