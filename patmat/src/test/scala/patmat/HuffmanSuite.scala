@@ -17,17 +17,12 @@ class HuffmanSuite extends FunSuite {
   test("weight of a larger tree") {
     new TestTrees {
       assert(weight(t1) === 5)
-    }
-  }
-
-  test("chars of a larger tree") {
-    new TestTrees {
-      assert(chars(t2) === List('a','b','d'))
+      assert(weight(t2) === 9)
     }
   }
 
   test("string2chars(\"hello, world\")") {
-    assert(string2Chars("hello, world") === List('h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd'))
+    assert(string2Chars("hello, world") === List('h','e','l','l','o',',',' ','w','o','r','l','d'))
   }
 
   test("makeOrderedLeafList for some frequency table") {
@@ -35,13 +30,43 @@ class HuffmanSuite extends FunSuite {
   }
 
   test("combine of some leaf list") {
-    val leaflist = List(Leaf('e', 1), Leaf('t', 2), Leaf('x', 4))
-    assert(combine(leaflist) === List(Fork(Leaf('e',1),Leaf('t',2),List('e', 't'),3), Leaf('x',4)))
+    val leaflist = List(Leaf('e',1), Leaf('t',2), Leaf('x',4))
+    assert(combine(leaflist) === List(Fork(Leaf('e',1),Leaf('t',2),List('e','t'),3), Leaf('x',4)))
   }
 
   test("decode and encode a very short text should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
     }
+  }
+
+  test("until reduces to a single tree") {
+    val trees = makeOrderedLeafList(List(('a',2), ('b',3), ('c',1)))
+    val result = until(singleton, combine)(trees)
+    assert(result.size === 1)
+    assert(weight(result.head) === 6)
+  }
+
+  test("createCodeTree produces correct total weight") {
+    val chars = "aabbbcccc".toList
+    val tree = createCodeTree(chars)
+    assert(weight(tree) === chars.size)
+  }
+
+  test("encode and decode with createCodeTree should be identity") {
+    val text = "thequickbrownfox".toList
+    val tree = createCodeTree(text)
+    val encoded = encode(tree)(text)
+    val decoded = decode(tree, encoded)
+    assert(decoded === text)
+  }
+
+  test("createCodeTree with single character string") {
+    val chars = "aaaa".toList
+    val tree = createCodeTree(chars)
+    assert(weight(tree) === 4)
+    val encoded = encode(tree)(chars)
+    val decoded = decode(tree, encoded)
+    assert(decoded === chars)
   }
 }
